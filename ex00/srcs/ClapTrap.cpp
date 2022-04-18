@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:33:53 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 00:30:05 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/19 00:58:58 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,11 +166,6 @@ int         ClapTrap::getHitPoints()
 int         ClapTrap::getEnergyPoints()
 {
     return (_energyPoints);
-}
-
-void        ClapTrap::setAttackDamage(int attackDamage)
-{
-    _attackDamage = attackDamage;
 }
 
 int         ClapTrap::getAttackDamage()

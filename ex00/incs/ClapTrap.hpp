@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:30:55 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/18 23:23:41 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/19 00:58:43 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ class ClapTrap
         std::string getName();
         int         getHitPoints();
         int         getEnergyPoints();
-        void        setAttackDamage(int attackDamage);
         int         getAttackDamage();
 };
 

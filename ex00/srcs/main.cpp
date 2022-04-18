@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 08:22:16 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 00:33:08 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/19 01:02:43 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,12 @@
 
 void    printUsage()
 {
-    std::cout << "USAGE: ./trap Name1 AttackDamage1 Name2 AttackDamage2";
+    std::cout << "USAGE: ./trap Name1 Name2 Turn";
     std::cout << std::endl;
 }
 
 void    attack(ClapTrap &from, ClapTrap &to)
 {
-    if (from.getHitPoints() == 0)
-        return;
-    if (from.getEnergyPoints() == 0)
-        return;
     // "from" attack "to"
     from.attack(to.getName());
     // "to" take damege
@@ -69,7 +65,7 @@ void    action(ClapTrap &from, ClapTrap &to, std::string color)
 int     main(int argc, char **argv)
 {
     // check arguments
-    if (argc != 5) {
+    if (argc != 4) {
         printUsage();
         return 1;
     }
@@ -77,19 +73,16 @@ int     main(int argc, char **argv)
     // create claptrap
     ClapTrap    a(argv[1]);
     ClapTrap    b;
-    b.setName(argv[3]);
-
-    // set attack damage
-    a.setAttackDamage(atoi(argv[2]));
-    b.setAttackDamage(atoi(argv[4]));
+    b.setName(argv[2]);
     
     // print status
     a.printStatus();
     b.printStatus();
 
     // simulate (5 turn)
+    int turn = atoi(argv[3]);
     srand((unsigned int)time(NULL));
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < turn; i++) {
         // player1
         action(a, b, CLR_PINK);
         // player2
