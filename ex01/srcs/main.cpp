@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 08:22:16 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 12:36:09 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/19 16:53:57 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void    attack(ScavTrap &from, ScavTrap &to)
 void    repair(ScavTrap &clap)
 {
     // "clap" repair damage
-    clap.beRepaired(clap.getAttackDamage() * 2);
+    clap.beRepaired(clap.getAttackDamage() * 3);
 }
 
 void    action(ScavTrap &from, ScavTrap &to, std::string color)

@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:33:53 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 12:32:38 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/19 14:30:47 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ ClapTrap::ClapTrap()
 
 // ------------------------- conberting contsructor ------------------------- //
 
-ClapTrap::ClapTrap(const std::string name): _name(name)
+ClapTrap::ClapTrap(const std::string name)
 {
     std::cout << "[ClapTrap] Conberting constructor called" << std::endl;
     initParameter(name);

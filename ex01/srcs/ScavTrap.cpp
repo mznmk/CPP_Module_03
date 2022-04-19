@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 06:42:10 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 12:40:14 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/19 17:25:50 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void        ScavTrap::initParameter(const std::string name)
 
 // -------------------------- default contsructor --------------------------- //
 
-ScavTrap::ScavTrap()
+ScavTrap::ScavTrap() : ClapTrap()
 {
     std::cout << "[ScavTrap] Default constructor called" << std::endl;
     initParameter("");

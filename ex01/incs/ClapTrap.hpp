@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:30:55 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 12:26:31 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/19 14:19:57 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ class ClapTrap
         virtual ~ClapTrap();
 
         // [ operator ]
-        ClapTrap &operator=(const ClapTrap &clap);
+        ClapTrap    &operator=(const ClapTrap &clap);
 
         // [ method ]
         void        attack(const std::string &target);
@@ -58,6 +58,5 @@ class ClapTrap
         int         getAttackDamage();
         bool        getCanAction();
 };
-
 
 #endif
