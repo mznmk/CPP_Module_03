@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:33:53 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/20 07:44:27 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/20 08:40:07 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void        ClapTrap::_copyParameter(const ClapTrap &clap)
 
 // ----------------------------- print message ------------------------------ //
 
-bool        ClapTrap::_printIsDead()
+bool        ClapTrap::_printNoLifeMessage()
 {
     if (_hitPoints <= 0) {
         std::cout << "ClapTrap <" << _name << "> is already dead ...";
@@ -47,7 +47,7 @@ bool        ClapTrap::_printIsDead()
     return false;
 }
 
-bool        ClapTrap::_printNoEnergy()
+bool        ClapTrap::_printNoEnergyMessage()
 {
     if (_energyPoints <= 0) {
         std::cout << "ClapTrap <" << _name << "> has no energy points ...";
@@ -106,13 +106,17 @@ ClapTrap    &ClapTrap::operator=(const ClapTrap &clap)
 
 // =========================== [ public ] method ============================ //
 
+/*!
+** @brief   command attack
+** @param   target  attack target
+*/
 void        ClapTrap::attack(const std::string &target)
 {
-    // have hit points ?
-    if (_printIsDead())
+    // already dead ?
+    if (_printNoLifeMessage())
         return;
-    // have energy points ?
-    if (_printNoEnergy())
+    // have energy point ?
+    if (_printNoEnergyMessage())
         return;
     // attack
     _energyPoints -= 1;
@@ -122,31 +126,35 @@ void        ClapTrap::attack(const std::string &target)
     std::cout << std::endl;
 }
 
+/*!
+** @brief   command take damage
+** @param   amount  amount of damage
+*/
 void        ClapTrap::takeDamage(unsigned int amount)
 {
-    // have hit points ?
-    if (_printIsDead())
+    // already dead ?
+    if (_printNoLifeMessage())
         return;
     // take damage
     _hitPoints -= amount;
     std::cout << "ClapTrap <" << _name << "> ";
     std::cout << "take <" << amount << "> points of damage!";
     std::cout << std::endl;
-    // dead now
-    if (_hitPoints <= 0) {
-        _hitPoints = 0;
-        std::cout << "ClapTrap <" << _name << "> died ...";
-        std::cout << std::endl;
-    }
+    // dead now ?
+    _printNoLifeMessage();
 }
 
+/*!
+** @brief   command be repaired
+** @param   amount  amount of repaired
+*/
 void        ClapTrap::beRepaired(unsigned int amount)
 {
-    // have hit points ?
-    if (_printIsDead())
+    // already dead ?
+    if (_printNoLifeMessage())
         return;
-    // have energy points ?
-    if (_printNoEnergy())
+    // have energy point ?
+    if (_printNoEnergyMessage())
         return;
     // be repaired
     _energyPoints -= 1;
@@ -156,6 +164,9 @@ void        ClapTrap::beRepaired(unsigned int amount)
     std::cout << std::endl;
 }
 
+/*!
+** @brief   print Robot status
+*/
 void        ClapTrap::printStatus()
 {
     std::cout << "---------- status ----------" << std::endl;
@@ -179,22 +190,22 @@ void        ClapTrap::setName(const std::string &name)
 
 std::string ClapTrap::getName()
 {
-    return (_name);
+    return _name;
 }
 
 int         ClapTrap::getHitPoints()
 {
-    return (_hitPoints);
+    return _hitPoints;
 }
 
 int         ClapTrap::getEnergyPoints()
 {
-    return (_energyPoints);
+    return _energyPoints;
 }
 
 int         ClapTrap::getAttackDamage()
 {
-    return (_attackDamage);
+    return _attackDamage;
 }
 
 bool        ClapTrap::getCanAction()
