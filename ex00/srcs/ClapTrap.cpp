@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:33:53 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 14:40:25 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/20 07:44:27 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,48 @@
 
 // =========================== [ private ] method =========================== //
 
-void        ClapTrap::initParameter(const std::string name)
+// ----------------------------- set parameter ------------------------------ //
+
+void        ClapTrap::_initParameter(const std::string name)
 {
     _name = name;
     _hitPoints = 10;
     _energyPoints = 10;
     _attackDamage = 0;
     _canAction = true;
+}
+
+void        ClapTrap::_copyParameter(const ClapTrap &clap)
+{
+    _name = clap._name;
+    _hitPoints = clap._hitPoints;
+    _energyPoints = clap._energyPoints;
+    _attackDamage = clap._attackDamage;
+    _canAction = clap._canAction;
+}
+
+// ----------------------------- print message ------------------------------ //
+
+bool        ClapTrap::_printIsDead()
+{
+    if (_hitPoints <= 0) {
+        std::cout << "ClapTrap <" << _name << "> is already dead ...";
+        std::cout << std::endl;
+        _canAction = false;
+        return true;
+    }
+    return false;
+}
+
+bool        ClapTrap::_printNoEnergy()
+{
+    if (_energyPoints <= 0) {
+        std::cout << "ClapTrap <" << _name << "> has no energy points ...";
+        std::cout << std::endl;
+        _canAction = false;
+        return true;
+    }
+    return false;
 }
 
 // ================== [ public ] constructor / destructor =================== //
@@ -30,7 +65,7 @@ void        ClapTrap::initParameter(const std::string name)
 ClapTrap::ClapTrap()
 {
     std::cout << "Default constructor called" << std::endl;
-    initParameter("");
+    _initParameter("");
 }
 
 // ------------------------- conberting contsructor ------------------------- //
@@ -38,7 +73,7 @@ ClapTrap::ClapTrap()
 ClapTrap::ClapTrap(const std::string name)
 {
     std::cout << "Conberting constructor called" << std::endl;
-    initParameter(name);
+    _initParameter(name);
 }
 
 // ---------------------------- copy contsructor ---------------------------- //
@@ -46,11 +81,7 @@ ClapTrap::ClapTrap(const std::string name)
 ClapTrap::ClapTrap(const ClapTrap &clap)
 {
     std::cout << "Copy constructor called" << std::endl;
-    _name = clap._name;
-    _hitPoints = clap._hitPoints;
-    _energyPoints = clap._energyPoints;
-    _attackDamage = clap._attackDamage;
-    _canAction = clap._canAction;
+    _copyParameter(clap);
 }
 
 // ------------------------------- destructor ------------------------------- //
@@ -68,11 +99,7 @@ ClapTrap    &ClapTrap::operator=(const ClapTrap &clap)
 {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &clap) {
-        _name = clap._name;
-        _hitPoints = clap._hitPoints;
-        _energyPoints = clap._energyPoints;
-        _attackDamage = clap._attackDamage;
-        _canAction = clap._canAction;
+        _copyParameter(clap);
     }
     return *this;
 }
@@ -81,20 +108,12 @@ ClapTrap    &ClapTrap::operator=(const ClapTrap &clap)
 
 void        ClapTrap::attack(const std::string &target)
 {
-    // already dead ?
-    if (_hitPoints == 0) {
-        std::cout << "ClapTrap <" << _name << "> is already dead ...";
-        std::cout << std::endl;
-        _canAction = false;
+    // have hit points ?
+    if (_printIsDead())
         return;
-    }
-    // have energy point ?
-    if (_energyPoints <= 0) {
-        std::cout << "ClapTrap <" << _name << "> has no energy points ...";
-        std::cout << std::endl;
-        _canAction = false;
+    // have energy points ?
+    if (_printNoEnergy())
         return;
-    }
     // attack
     _energyPoints -= 1;
     std::cout << "ClapTrap <" << _name << "> ";
@@ -105,12 +124,9 @@ void        ClapTrap::attack(const std::string &target)
 
 void        ClapTrap::takeDamage(unsigned int amount)
 {
-    // already dead ?
-    if (_hitPoints == 0) {
-        std::cout << "ClapTrap <" << _name << "> is already dead ...";
-        std::cout << std::endl;
+    // have hit points ?
+    if (_printIsDead())
         return;
-    }
     // take damage
     _hitPoints -= amount;
     std::cout << "ClapTrap <" << _name << "> ";
@@ -126,20 +142,12 @@ void        ClapTrap::takeDamage(unsigned int amount)
 
 void        ClapTrap::beRepaired(unsigned int amount)
 {
-    // already dead ?
-    if (_hitPoints == 0) {
-        std::cout << "ClapTrap <" << _name << "> is already dead ...";
-        std::cout << std::endl;
-        _canAction = false;
+    // have hit points ?
+    if (_printIsDead())
         return;
-    }
-    // have energy point ?
-    if (_energyPoints <= 0) {
-        std::cout << "ClapTrap <" << _name << "> has no energy points ...";
-        std::cout << std::endl;
-        _canAction = false;
+    // have energy points ?
+    if (_printNoEnergy())
         return;
-    }
     // be repaired
     _energyPoints -= 1;
     _hitPoints += amount;
@@ -160,10 +168,14 @@ void        ClapTrap::printStatus()
 
 // ======================= [ public ] setter / getter ======================= //
 
+// ---------------------------------- setter -------------------------------- //
+
 void        ClapTrap::setName(const std::string &name)
 {
     _name = name;
 }
+
+// ---------------------------------- setter -------------------------------- //
 
 std::string ClapTrap::getName()
 {
