@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 08:22:16 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 01:02:43 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/19 14:39:41 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ void    attack(ClapTrap &from, ClapTrap &to)
     // "from" attack "to"
     from.attack(to.getName());
     // "to" take damege
-    to.takeDamage(from.getAttackDamage());
+    if (from.getCanAction())
+        to.takeDamage(from.getAttackDamage());
 }
 
 void    repair(ClapTrap &clap)
 {
     // "clap" repair damage
-    clap.beRepaired(clap.getAttackDamage());
+    clap.beRepaired(clap.getAttackDamage() * 2);
 }
 
 void    action(ClapTrap &from, ClapTrap &to, std::string color)
@@ -54,10 +55,10 @@ void    action(ClapTrap &from, ClapTrap &to, std::string color)
     std::cout << "[ turn: " << from.getName() << " ]" << std::endl;
 
     int act = rand() % 5;
-    if (0 <= act && act <= 2)
-        attack(from, to);
-    else
+    if (0 <= act && act <= 0)
         repair(from);
+    else
+        attack(from, to);
 
     std::cout << ESC_RESET;
 }
@@ -87,14 +88,15 @@ int     main(int argc, char **argv)
         action(a, b, CLR_PINK);
         // player2
         action(b, a, CLR_CYAN);
+
+        // print status
+        a.printStatus();
+        b.printStatus();
+
         // player1 or player2 is dead ?
         if (a.getHitPoints() == 0 || b.getHitPoints() == 0)
             break;
     }
-
-    // print status
-    a.printStatus();
-    b.printStatus();
 
     // [ return ]
     return 0;

@@ -6,32 +6,39 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:33:53 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 00:58:58 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/19 14:40:25 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ClapTrap.hpp"
 
+// =========================== [ private ] method =========================== //
+
+void        ClapTrap::initParameter(const std::string name)
+{
+    _name = name;
+    _hitPoints = 10;
+    _energyPoints = 10;
+    _attackDamage = 0;
+    _canAction = true;
+}
+
 // ================== [ public ] constructor / destructor =================== //
 
 // -------------------------- default contsructor --------------------------- //
 
-ClapTrap::ClapTrap(): _name("")
+ClapTrap::ClapTrap()
 {
     std::cout << "Default constructor called" << std::endl;
-    _hitPoints = 10;
-    _energyPoints = 10;
-    _attackDamage = 0;
+    initParameter("");
 }
 
 // ------------------------- conberting contsructor ------------------------- //
 
-ClapTrap::ClapTrap(const std::string &name): _name(name)
+ClapTrap::ClapTrap(const std::string name)
 {
     std::cout << "Conberting constructor called" << std::endl;
-    _hitPoints = 10;
-    _energyPoints = 10;
-    _attackDamage = 0;
+    initParameter(name);
 }
 
 // ---------------------------- copy contsructor ---------------------------- //
@@ -43,6 +50,7 @@ ClapTrap::ClapTrap(const ClapTrap &clap)
     _hitPoints = clap._hitPoints;
     _energyPoints = clap._energyPoints;
     _attackDamage = clap._attackDamage;
+    _canAction = clap._canAction;
 }
 
 // ------------------------------- destructor ------------------------------- //
@@ -51,7 +59,6 @@ ClapTrap::~ClapTrap()
 {
     std::cout << "Destructor called" << std::endl;
 }
-
 
 // ========================== [ public ] operator =========================== //
 
@@ -65,6 +72,7 @@ ClapTrap    &ClapTrap::operator=(const ClapTrap &clap)
         _hitPoints = clap._hitPoints;
         _energyPoints = clap._energyPoints;
         _attackDamage = clap._attackDamage;
+        _canAction = clap._canAction;
     }
     return *this;
 }
@@ -77,12 +85,14 @@ void        ClapTrap::attack(const std::string &target)
     if (_hitPoints == 0) {
         std::cout << "ClapTrap <" << _name << "> is already dead ...";
         std::cout << std::endl;
+        _canAction = false;
         return;
     }
     // have energy point ?
     if (_energyPoints <= 0) {
         std::cout << "ClapTrap <" << _name << "> has no energy points ...";
         std::cout << std::endl;
+        _canAction = false;
         return;
     }
     // attack
@@ -120,19 +130,21 @@ void        ClapTrap::beRepaired(unsigned int amount)
     if (_hitPoints == 0) {
         std::cout << "ClapTrap <" << _name << "> is already dead ...";
         std::cout << std::endl;
+        _canAction = false;
         return;
     }
     // have energy point ?
     if (_energyPoints <= 0) {
         std::cout << "ClapTrap <" << _name << "> has no energy points ...";
         std::cout << std::endl;
+        _canAction = false;
         return;
     }
     // be repaired
     _energyPoints -= 1;
     _hitPoints += amount;
     std::cout << "ClapTrap <" << _name << "> ";
-    std::cout << "is repaired <" << amount << "> Hit Points !";
+    std::cout << "is repaired <" << amount << "> Hit Points!";
     std::cout << std::endl;
 }
 
@@ -171,4 +183,9 @@ int         ClapTrap::getEnergyPoints()
 int         ClapTrap::getAttackDamage()
 {
     return (_attackDamage);
+}
+
+bool        ClapTrap::getCanAction()
+{
+    return _canAction;
 }
