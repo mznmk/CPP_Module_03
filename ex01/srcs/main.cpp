@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 08:22:16 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 16:53:57 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/20 09:52:27 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,21 @@
 #include <stdlib.h>
 
 # define ESC_RESET      "\033[0m"
-# define FNT_BOLD       "\033[1m"
-# define FNT_FINE       "\033[2m"
-# define FNT_ITALIC     "\033[3m"
-# define FNT_ULINE      "\033[4m"
-# define CLR_BLACK      "\033[38;5;00m"
-# define CLR_RED        "\033[38;5;01m"
-# define CLR_GREEN      "\033[38;5;02m"
-# define CLR_YELLOW     "\033[38;5;03m"
-# define CLR_BLUE       "\033[38;5;04m"
-# define CLR_MAGENTA    "\033[38;5;05m"
 # define CLR_CYAN       "\033[38;5;06m"
-# define CLR_WHITE      "\033[38;5;07m"
 # define CLR_PINK       "\033[38;5;213m"
 
+// -------------------------------------------------------------------------- //
+
+/*!
+** @brief   print usage
+*/
 void    printUsage()
 {
     std::cout << "USAGE: ./trap Name1 Name2 Turn";
     std::cout << std::endl;
 }
+
+// -------------------------------------------------------------------------- //
 
 void    attack(ScavTrap &from, ScavTrap &to)
 {
@@ -46,14 +42,20 @@ void    attack(ScavTrap &from, ScavTrap &to)
 void    repair(ScavTrap &clap)
 {
     // "clap" repair damage
-    clap.beRepaired(clap.getAttackDamage() * 3);
+    clap.beRepaired(clap.getAttackDamage() * 4);
 }
 
-void    action(ScavTrap &from, ScavTrap &to, std::string color)
+/*!
+** @brief   execute player's action
+*/
+void    action(ScavTrap &from, ScavTrap &to, int turn, std::string color)
 {
     std::cout << color;
-    std::cout << "[ turn: " << from.getName() << " ]" << std::endl;
 
+    // print turn status
+    std::cout << "[ turn " << turn << ": " << from.getName() << " ]" << std::endl;
+
+    // execute random action
     int act = rand() % 5;
     if (0 <= act && act <= 0)
         repair(from);
@@ -63,6 +65,14 @@ void    action(ScavTrap &from, ScavTrap &to, std::string color)
     std::cout << ESC_RESET;
 }
 
+// -------------------------------------------------------------------------- //
+
+/*!
+** @brief   class ClapTrap test
+** @param   argc    argument count
+** @param   aragv   argument value
+** @return  status
+*/
 int     main(int argc, char **argv)
 {
     // check arguments
@@ -85,15 +95,15 @@ int     main(int argc, char **argv)
     srand((unsigned int)time(NULL));
     for (int i = 0; i < turn; i++) {
         // player1
-        action(a, b, CLR_PINK);
+        action(a, b, i+1, CLR_PINK);
         // player2
-        action(b, a, CLR_CYAN);
+        action(b, a, i+1, CLR_CYAN);
 
         // print status
         a.printStatus();
         b.printStatus();
 
-        // player1 or player2 is dead ?
+        // both player1 and player2 have Hit Points ?
         if (a.getHitPoints() == 0 || b.getHitPoints() == 0)
             break;
     }

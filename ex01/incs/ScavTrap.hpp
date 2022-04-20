@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 06:41:56 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/19 12:18:29 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/20 09:16:47 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ class ScavTrap : public ClapTrap
 {
     private:
         // [ method ]
-        void        initParameter(const std::string name);
+        void        _initParameter(const std::string name);
+        void        _copyParameter(const ScavTrap &scav);
+        bool        _printNoLifeMessage();
+        bool        _printNoEnergyMessage();
 
     public:
         // [ constructor / destructor ]
