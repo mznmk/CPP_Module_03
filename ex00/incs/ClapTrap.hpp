@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:30:55 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/20 08:29:37 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/20 11:32:30 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ class ClapTrap
         // [ method ]
         void        _initParameter(const std::string name);
         void        _copyParameter(const ClapTrap &clap);
-        bool        _printNoLifeMessage();
-        bool        _printNoEnergyMessage();
+        bool        _setPrintNoLife();
+        bool        _setPrintNoEnergy();
 
     public:
         // [ constructor / destructor ]

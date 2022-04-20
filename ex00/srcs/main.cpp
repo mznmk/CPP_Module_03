@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 08:22:16 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/20 07:53:11 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/20 12:02:32 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,9 @@ int     main(int argc, char **argv)
     int turn = atoi(argv[3]);
     srand((unsigned int)time(NULL));
     for (int i = 0; i < turn; i++) {
-        // player1
+        // player1's turn
         action(a, b, i+1, CLR_PINK);
-        // player2
+        // player2's turn
         action(b, a, i+1, CLR_CYAN);
 
         // print status

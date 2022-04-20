@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 20:33:53 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/20 08:40:07 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/20 11:07:23 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,31 @@ void        ClapTrap::_copyParameter(const ClapTrap &clap)
     _canAction = clap._canAction;
 }
 
-// ----------------------------- print message ------------------------------ //
+// --------------------------- set / print status --------------------------- //
 
-bool        ClapTrap::_printNoLifeMessage()
+bool        ClapTrap::_setPrintNoLife()
 {
     if (_hitPoints <= 0) {
-        std::cout << "ClapTrap <" << _name << "> is already dead ...";
-        std::cout << std::endl;
+        // change state
+        _hitPoints = 0;
         _canAction = false;
+        // print state
+        std::cout << "ClapTrap <" << _name << "> is dead ...";
+        std::cout << std::endl;
         return true;
     }
     return false;
 }
 
-bool        ClapTrap::_printNoEnergyMessage()
+bool        ClapTrap::_setPrintNoEnergy()
 {
     if (_energyPoints <= 0) {
+        // change state
+        _energyPoints = 0;
+        _canAction = false;
+        // print message
         std::cout << "ClapTrap <" << _name << "> has no energy points ...";
         std::cout << std::endl;
-        _canAction = false;
         return true;
     }
     return false;
@@ -113,10 +119,10 @@ ClapTrap    &ClapTrap::operator=(const ClapTrap &clap)
 void        ClapTrap::attack(const std::string &target)
 {
     // already dead ?
-    if (_printNoLifeMessage())
+    if (_setPrintNoLife())
         return;
     // have energy point ?
-    if (_printNoEnergyMessage())
+    if (_setPrintNoEnergy())
         return;
     // attack
     _energyPoints -= 1;
@@ -133,7 +139,7 @@ void        ClapTrap::attack(const std::string &target)
 void        ClapTrap::takeDamage(unsigned int amount)
 {
     // already dead ?
-    if (_printNoLifeMessage())
+    if (_setPrintNoLife())
         return;
     // take damage
     _hitPoints -= amount;
@@ -141,7 +147,7 @@ void        ClapTrap::takeDamage(unsigned int amount)
     std::cout << "take <" << amount << "> points of damage!";
     std::cout << std::endl;
     // dead now ?
-    _printNoLifeMessage();
+    _setPrintNoLife();
 }
 
 /*!
@@ -151,10 +157,10 @@ void        ClapTrap::takeDamage(unsigned int amount)
 void        ClapTrap::beRepaired(unsigned int amount)
 {
     // already dead ?
-    if (_printNoLifeMessage())
+    if (_setPrintNoLife())
         return;
     // have energy point ?
-    if (_printNoEnergyMessage())
+    if (_setPrintNoEnergy())
         return;
     // be repaired
     _energyPoints -= 1;
