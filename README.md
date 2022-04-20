@@ -41,20 +41,57 @@ CPP_Module_03 now exists as Cursus 1stCircle Level4 Project.
 	```
 - 実行方法
 	```
-	fixed
+	./trap Name1 Name2 Turn
 	```
+	引数１: Player1の名前  
+	引数２: Player2の名前  
+	引数３: ターン数  
 
+	Name1(CrapTrap型) と Name2(CrapTrap型) が対戦します。  
+	対戦は Turn ターン 行われます。  
 
 
 ## Exercise 01: Serena, my love!
 
+- 実行ファイル作成方法
+	```sh
+	make
+	make leak		// with -fsanitize=leak
+	make address	// with -g -fsanitize=address
+	```
+- 実行方法
+	```
+	./trap Name1 Name2 Turn
+	```
+	引数１: Player1の名前  
+	引数２: Player2の名前  
+	引数３: ターン数  
 
+	Name1(ScavTrap型) と Name2(ScavTrap型) が対戦します。  
+	対戦は Turn ターン 行われます。  
 
 
 ## Exercise 02: Repetitive work
 
+- 実行ファイル作成方法
+	```sh
+	make
+	make leak		// with -fsanitize=leak
+	make address	// with -g -fsanitize=address
+	```
+- 実行方法
+	```
+	./trap Name1 Name2 Turn
+	```
+	引数１: Player1の名前  
+	引数２: Player2の名前  
+	引数３: ターン数  
+
+	Name1(ScavTrap型) と Name2(FragTrap型) が対戦します。  
+	対戦は Turn ターン 行われます。  
 
 
 ## Exercise 03: Now it’s weird!
 
+手をつけていません。  
 
