@@ -6,7 +6,7 @@
 /*   By: mmizuno <mmizuno@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 06:42:10 by mmizuno           #+#    #+#             */
-/*   Updated: 2022/04/20 09:20:44 by mmizuno          ###   ########.fr       */
+/*   Updated: 2022/04/20 11:15:27 by mmizuno          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,29 @@ void        ScavTrap::_copyParameter(const ScavTrap &scav)
 
 // ----------------------------- print message ------------------------------ //
 
-bool        ScavTrap::_printNoLifeMessage()
+bool        ScavTrap::_setPrintNoLife()
 {
     if (_hitPoints <= 0) {
+        // change state
+        _hitPoints = 0;
+        _canAction = false;
+        // print state
         std::cout << "ScavTrap <" << _name << "> is dead ...";
         std::cout << std::endl;
-        _canAction = false;
         return true;
     }
     return false;
 }
 
-bool        ScavTrap::_printNoEnergyMessage()
+bool        ScavTrap::_setPrintNoEnergy()
 {
     if (_energyPoints <= 0) {
+        // change state
+        _energyPoints = 0;
+        _canAction = false;
+        // print message
         std::cout << "ScavTrap <" << _name << "> has no energy points ...";
         std::cout << std::endl;
-        _canAction = false;
         return true;
     }
     return false;
@@ -113,10 +119,10 @@ ScavTrap    &ScavTrap::operator=(const ScavTrap &scav)
 void        ScavTrap::attack(const std::string &target)
 {
     // already dead ?
-    if (_printNoLifeMessage())
+    if (_setPrintNoLife())
         return;
     // have energy point ?
-    if (_printNoEnergyMessage())
+    if (_setPrintNoEnergy())
         return;
     // attack
     _energyPoints -= 1;
